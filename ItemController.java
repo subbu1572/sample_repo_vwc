@@ -30,6 +30,22 @@ public class ItemController {
 	ItemService itemservice;
 	@Autowired
 	ItemRepository ir;
+	
+	system.out.println("HAI SUBBA RAO")
+	
+		/*RQ_1543-CODE CHANGES -START */
+		@PatchMapping("/item/{id}/{name}")
+	public ResponseEntity<Item1> updateEmployeePartially(@PathVariable Long id, @PathVariable Integer cost) {
+		try {
+			Item1 item = ir.findById(id).get();
+			item.setCost(cost);
+			return new ResponseEntity<Item1>(ir.save(item), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+		/*RQ_1543-CODE CHANGES -END */
+
 
 	@PostMapping("/create")
 	public ResponseEntity<Item1> createItem(@Valid @RequestBody Item1 item) {
