@@ -40,6 +40,20 @@ public class ItemController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	/*RQ_1541-CODE CHANGES -START */
+		@PatchMapping("/item/{id}/{name}")
+	public ResponseEntity<Item1> updateEmployeePartially(@PathVariable Long id, @PathVariable Integer cost) {
+		try {
+			Item1 item = ir.findById(id).get();
+			item.setCost(cost);
+			return new ResponseEntity<Item1>(ir.save(item), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+		/*RQ_1541-CODE CHANGES -END */
+
+
 
 
 	@GetMapping("/items/{no}")
@@ -78,6 +92,17 @@ public class ItemController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	/*Rq-1542-code changes -start */
+		@GetMapping("/items/{no}")
+	public ResponseEntity < Item1 > getItemById
+	(@PathVariable(value = "no") Long itemno)
+	throws ResouceNotFoundException1{
+		Item1 item = ir.findById(itemno).orElseThrow(() -> new ResouceNotFoundException1("Your"
+				+ " Entered Item Number is not available in Database,Could you please try with other Item Number :: " + itemno));
+	    return ResponseEntity.ok().body(item);
+}
+	/*Rq-1542-code changes -end */
+
 
 	
 	}
